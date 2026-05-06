@@ -24,15 +24,15 @@ Os cenários são descritos em arquivos `.yml` com formato compatível com o sim
 rndnumbersPerSeed: 100000   # critério de parada
 
 seeds:
-- 7                          # semente do LCG (usa-se a primeira)
+- 7                          
 
 arrivals:
-   F1: 2.0                   # instante da primeira chegada externa por fila
+   F1: 2.0                   
 
 queues:
    F1:
       servers: 1
-      capacity: 5             # omitir = capacidade infinita
+      capacity: 5             
       minArrival: 2.0
       maxArrival: 5.0
       minService: 3.0
@@ -42,7 +42,7 @@ queues:
       minService: 1.0
       maxService: 2.0
 
-network:                      # roteamento entre filas
+network:                      
 - source: F1
   target: F2
   probability: 0.8
