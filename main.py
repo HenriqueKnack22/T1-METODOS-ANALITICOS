@@ -412,24 +412,34 @@ def plotar_distribuicao(resultado: dict, titulo: str, arquivo: str | Path):
 
 
 def salvar_resultados(resultado: dict, titulo: str, arquivo: str | Path):
+    W = 56
     with open(arquivo, "w", encoding="utf-8") as f:
-        f.write(f"Simulador de Filas — {titulo}\n")
-        f.write("=" * 60 + "\n\n")
-        f.write(f"Tempo total: {resultado['tempo_global']:.4f}\n\n")
+        f.write("#" * W + "\n")
+        f.write(f"#  SIMULAÇÃO DE FILAS\n")
+        f.write(f"#  Modelo : {titulo}\n")
+        f.write(f"#  Duração: {resultado['tempo_global']:.4f}\n")
+        f.write("#" * W + "\n\n")
+
         for fila in resultado["filas"].values():
-            f.write(f"Fila {fila.nome}  ({fila.notacao_kendall()})\n")
+            f.write("~" * W + "\n")
+            f.write(f"  Fila {fila.nome}  [{fila.notacao_kendall()}]\n")
+            f.write("~" * W + "\n")
             if fila.min_chegada is not None:
-                f.write(f"  Chegada:     {fila.min_chegada:.1f} .. {fila.max_chegada:.1f}\n")
+                f.write(f"  Chegada       {fila.min_chegada:.1f} — {fila.max_chegada:.1f}\n")
             else:
-                f.write(f"  Chegada:     (interna)\n")
-            f.write(f"  Atendimento: {fila.min_servico:.1f} .. {fila.max_servico:.1f}\n")
-            f.write(f"  Perdas:      {fila.recusados}\n")
+                f.write(f"  Chegada       interna (alimentada por outra fila)\n")
+            f.write(f"  Atendimento   {fila.min_servico:.1f} — {fila.max_servico:.1f}\n")
+            f.write(f"  Recusados     {fila.recusados}\n\n")
+
             probs = fila.distribuicao(resultado["tempo_global"])
-            f.write(f"  {'Estado':<8} {'Tempo':<18} {'Probabilidade':<15}\n")
-            f.write("  " + "-" * 43 + "\n")
+            f.write(f"  {'n':<6} {'Tempo acumulado':<22} {'P(n)':<12}\n")
+            f.write("  " + "." * 42 + "\n")
             for i, (t, p) in enumerate(zip(fila.tempos, probs)):
-                f.write(f"  {i:<8} {t:<18.4f} {p:<15.4f}\n")
+                f.write(f"  {i:<6} {t:<22.4f} {p:<12.4f}\n")
+            f.write("  " + "." * 42 + "\n")
+            f.write(f"  {'Σ':<6} {sum(fila.tempos):<22.4f} {sum(probs):<12.4f}\n")
             f.write("\n")
+
     print(f"Resultados salvos em: {arquivo}")
 
 
