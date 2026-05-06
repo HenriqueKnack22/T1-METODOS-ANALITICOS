@@ -1,0 +1,20 @@
+#==============================================================================
+# Cenario 2: G/G/2/5  -  chegadas 2..5, atendimento 3..5
+#==============================================================================
+!PARAMETERS
+
+rndnumbersPerSeed: 100000
+seeds:
+- 7
+
+arrivals:
+   F1: 2.0
+
+queues:
+   F1:
+      servers: 2
+      capacity: 5
+      minArrival: 2.0
+      maxArrival: 5.0
+      minService: 3.0
+      maxService: 5.0

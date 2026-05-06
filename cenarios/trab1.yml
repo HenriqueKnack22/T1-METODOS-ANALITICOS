@@ -1,0 +1,62 @@
+#==============================================================================
+# Trabalho 1 - Topologia da rede
+#
+#                          0,3
+#                  ┌────────────────────┐
+#                  │                    ▼
+#   2..4min        │     ┌────────┐
+#   ─────► [F1] ───┼─0,8─► [F2] G/G/2/5 (4..6min) ─0,2─► exterior
+#          G/G/1   │     └────┬───┘     ▲   │
+#          1..2min │          │ 0,5     │   │
+#                  │          ▼         │   │
+#                  │     ┌────────┐  0,7│   │
+#                  └─0,2─► [F3] G/G/2/10 (5..15min) ─0,3─► exterior
+#                        └────────┘
+#
+# F1: capacidade infinita (omitida)
+# Primeira chegada externa em F1: t=2.0
+# 100.000 numeros aleatorios, semente 7
+#==============================================================================
+!PARAMETERS
+
+rndnumbersPerSeed: 100000
+seeds:
+- 7
+
+arrivals:
+   F1: 2.0
+
+queues:
+   F1:
+      servers: 1
+      minArrival: 2.0
+      maxArrival: 4.0
+      minService: 1.0
+      maxService: 2.0
+   F2:
+      servers: 2
+      capacity: 5
+      minService: 4.0
+      maxService: 6.0
+   F3:
+      servers: 2
+      capacity: 10
+      minService: 5.0
+      maxService: 15.0
+
+network:
+-  source: F1
+   target: F2
+   probability: 0.8
+-  source: F1
+   target: F3
+   probability: 0.2
+-  source: F2
+   target: F1
+   probability: 0.3
+-  source: F2
+   target: F3
+   probability: 0.5
+-  source: F3
+   target: F2
+   probability: 0.7

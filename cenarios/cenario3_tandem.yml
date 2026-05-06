@@ -1,0 +1,30 @@
+#==============================================================================
+# Cenario 3: Tandem  G/G/2/3  ->  G/G/1/5
+#==============================================================================
+!PARAMETERS
+
+rndnumbersPerSeed: 100000
+seeds:
+- 7
+
+arrivals:
+   Q1: 1.5
+
+queues:
+   Q1:
+      servers: 2
+      capacity: 3
+      minArrival: 1.0
+      maxArrival: 4.0
+      minService: 3.0
+      maxService: 4.0
+   Q2:
+      servers: 1
+      capacity: 5
+      minService: 2.0
+      maxService: 3.0
+
+network:
+-  source: Q1
+   target: Q2
+   probability: 1.0

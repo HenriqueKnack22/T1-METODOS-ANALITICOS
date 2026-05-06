@@ -1,0 +1,50 @@
+#==============================================================================
+#  Cenario 4: Rede com roteamento probabilistico
+#
+#  F1 - G/G/1/3, chegadas 1..2, atendimento 2..3
+#  F2 - G/G/2/4, atendimento 3..5 (sem chegadas externas)
+#  F3 - G/G/3/5, atendimento 2..4 (sem chegadas externas)
+#
+#  Roteamento de F1:
+#    0.2 -> F2
+#    0.3 -> F3
+#    0.5 -> exterior (sem entrada explicita; massa restante = saida)
+#
+#  Primeira chegada externa em F1: t=1.5
+#  100.000 numeros aleatorios como criterio de parada, semente 7
+#==============================================================================
+!PARAMETERS
+
+rndnumbersPerSeed: 100000
+seeds:
+- 7
+
+arrivals:
+   F1: 1.5
+
+queues:
+   F1:
+      servers: 1
+      capacity: 3
+      minArrival: 1.0
+      maxArrival: 2.0
+      minService: 2.0
+      maxService: 3.0
+   F2:
+      servers: 2
+      capacity: 4
+      minService: 3.0
+      maxService: 5.0
+   F3:
+      servers: 3
+      capacity: 5
+      minService: 2.0
+      maxService: 4.0
+
+network:
+-  source: F1
+   target: F2
+   probability: 0.2
+-  source: F1
+   target: F3
+   probability: 0.3
