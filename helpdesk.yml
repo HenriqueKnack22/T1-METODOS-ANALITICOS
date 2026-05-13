@@ -1,0 +1,40 @@
+!PARAMETERS
+rndnumbersPerSeed: 100000
+seeds:
+- 1
+
+arrivals:
+   NIVEL1: 3.0
+
+queues:
+   NIVEL1:
+      servers: 3
+      capacity: 10
+      minArrival: 3.0
+      maxArrival: 7.0
+      minService: 5.0
+      maxService: 12.0
+   NIVEL2:
+      servers: 2
+      capacity: 8
+      minService: 15.0
+      maxService: 35.0
+   NIVEL3:
+      servers: 1
+      capacity: 5
+      minService: 30.0
+      maxService: 60.0
+
+network:
+-  source: NIVEL1
+   target: NIVEL2
+   probability: 0.55
+-  source: NIVEL2
+   target: NIVEL1
+   probability: 0.20
+-  source: NIVEL2
+   target: NIVEL3
+   probability: 0.30
+-  source: NIVEL3
+   target: NIVEL2
+   probability: 0.35
